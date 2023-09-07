@@ -20,6 +20,20 @@ def binary_search(mylist, key):
 	return _binary_search(mylist, key, 0, len(mylist)-1)
 
 def _binary_search(mylist, key, left, right):
+
+	
+	if right >= left:
+		testvar = (left + right) // 2
+		if mylist[testvar] == key:
+			return testvar
+		elif testvar <= key:
+			return _binary_search(mylist, key, testvar + 1, right)
+		elif testvar >= key:
+			return _binary_search(mylist, key, left, testvar - 1)
+	else:
+		return -1
+
+
 	"""
 	Recursive implementation of binary search.
 
@@ -58,6 +72,12 @@ def time_search(search_fn, mylist, key):
 	  search function on this input.
 	"""
 	### TODO
+	x = time.time()
+	search_fn(mylist, key)
+	y = time.time()
+	z = (y - x) * 1000
+
+	return z
 
 	###
 
@@ -79,6 +99,13 @@ def compare_search(sizes=[1e1, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7]):
 	### TODO
 
 	###
+	final = []
+	for i in sizes:
+		ilist = list(range(int(i)))
+		linTime = time_search(linear_search, ilist, -1)
+		binTime = time_search(binary_search, ilist, -1)
+		final.append((i, linTime, binTime))
+	return final
 
 def print_results(results):
 	""" done """
